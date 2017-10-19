@@ -4,8 +4,10 @@
     <div class="input-group mb-5">
       <input type="text" class="form-control" placeholder="Enter the Text" v-model="message">
       <span class="input-group-btn">
-        <button class="btn btn-primary" type="button" @click="submit()">Go!</button>
+        <button class="btn btn-primary" type="button" @click="submit">Go!</button>
       </span>
+
+      <button class="btn btn-danger" @click="clearMessage">Clear screen</button>
     </div>
 
     <div class="media my-4" v-for="item in messages">
@@ -24,7 +26,12 @@
       <!--</div>-->
       <!--<img class="d-flex ml-3" src="http://lorempixel.com/100/100/sports/" alt="Generic placeholder image">-->
     <!--</div>-->
+
+    <div class="mouseTracker mt-5 mb-20" @mousemove="showXY($event)">
+      {{x}},{{y}}
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -34,6 +41,8 @@
       return {
         msg: 'Welcome to Your Vue.js App',
         username: 'Rick',
+        x: 0,
+        y: 0,
         message: '',
         messages: [
           {
@@ -49,11 +58,20 @@
     },
     methods: {
       submit () {
-        let that = this
-        that.messages.push({
+        let that = this;
+        that.messages.unshift({
           username: that.username,
           message: that.message
         })
+        that.message = '';
+      },
+      clearMessage () {
+
+          this.messages = [];
+      },
+      showXY (event) {
+          this.x = event.offsetX;
+          this.y = event.offsetY;
       }
     }
   }
@@ -61,5 +79,16 @@
 
 <style scoped>
 
+  .hello2 {
+    height: 1000px;
+  }
+
+  .mouseTracker {
+    width: 600px;
+    height: 500px;
+    padding: 200px 20px;
+    text-align: center;
+    border: 1px solid black;
+  }
 </style>
 
